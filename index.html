@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://fonts.googleapis.com/css2?family=Courier+Prime:ital,wght@0,400;0,700;1,400;1,700&family=Fredoka&display=swap" rel="stylesheet">
+    <script src="https://kit.fontawesome.com/be4a2f4910.js" crossorigin="anonymous"></script>
+    <title>Demo Todolist</title>
+    <style>
+        body {
+            background-color: azure;
+        }
+        * {
+            margin: 0;
+            padding: 0;
+            font-family: 'Fredoka', sans-serif;
+        }
+        .container {
+            position: absolute;
+            width: 40%;
+            /* height: 60%; */
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+        ::placeholder {
+            color: rgb(151, 151, 151);
+        }
+        #add_task {
+            display: flex;
+            height: 30px;
+        }
+        #input_task{
+            background-color: #214875;
+            width: 90%;
+            color: white;
+            padding: 0 10px;
+            outline: none;
+            border: 1px solid transparent;
+        }
+        
+        #add_btn {
+            /* display: flex; */
+            align-items: center;
+            width: 10%;
+            /* justify-content: center; */
+            background-color: rgb(157, 240, 222);
+            border: 1px solid transparent;
+        }
+
+        #list {
+            list-style-type: none;
+            /* width: 100%; */
+        }
+
+        #list li {
+            border-bottom: 1px solid rgb(228, 228, 228);
+            padding: 10px;
+            display: flex;
+            /* justify-content: center; */
+            width: 100%;
+            align-items: center;
+            color: black;
+            font-weight: 400;
+        }
+
+        #list li input {
+            margin-right: 10px;
+        }
+
+        /* .items {
+            width: 100%;
+        } */
+
+        .remove_item {
+            height: 100%;
+            background-color: transparent;
+            border: 1px solid transparent;
+            background-color: rgb(255, 115, 115);
+            right: 0;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div id="add_task">
+            <input type="text" name="content_task" id="input_task" placeholder="Enter a task" >
+            <button id="add_btn"onclick="return add_new()"><i class="fa-solid fa-plus" style="color: rgb(10, 10, 10)" ></button>
+        </div>
+        <div>
+            <ul id="list">
+    
+            </ul>
+        </div>
+    </div>
+    <script>
+        let todoList=['first', 'second','third'];
+
+        if (localStorage.getItem('todoList'))
+            todoList = JSON.parse(localStorage.getItem('todoList'));
+        else
+            todoList = [];
+
+        console.log(todoList);
+        const list = document.getElementById('list');
+        let items = "";
+        for (const item of todoList) {
+            items +=  '<li>'+'<input name="todo_item" type="checkbox" class="items">'+item+ '<button class="remove_item" onclick="return delete_one()"><i class="fa-solid fa-xmark"></i></button></li>';
+        }
+
+        //take new task
+        function add_new(){
+            const input_task = document.getElementById('input_task');
+            if (input_task.value != ""){
+                todoList.push(input_task.value);
+                items +=  '<li>'+'<input name="todo_item" type="checkbox" class="items">'+todoList[todoList.length-1]+ '</li>';
+                input_task.value="";
+            }
+
+            // Push to local storage
+            localStorage.setItem('todoList', JSON.stringify(todoList));
+            list.innerHTML=items;
+        }
+        add_new()
+
+        function delete_one(){
+            
+        }
+    </script>
+</body>
+</html>
